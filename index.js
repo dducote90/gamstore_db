@@ -95,7 +95,7 @@ app.post('/api/videogames', async (req, res, next) => {
         const response = await client.query(SQL, [req.body.name, req.body.rating, req.body.img]);
         const newGame = response.rows[0];
 
-        res.send(newGame);
+        res.status(200).send(newGame);
 
     } catch (error) {
         next(error);
@@ -122,7 +122,7 @@ app.put('/api/videogames/:id', async (req, res, next) => {
         }
 
         const updatedGame = response.rows[0];
-        res.send(updatedGame);
+        res.status(200).send(updatedGame);
 
     } catch (error) {
         next(error);
@@ -143,11 +143,11 @@ app.delete('/api/videogames/:id', async (req, res, next) => {
         const response = await client.query(SQL, [gameId]);
 
         if (response.rows.length === 0) {
-            return res.status(404).json({ error: 'Game not found' });
+            return res.status(404).send({ error: 'Game not found' });
         }
 
         const deletedGame = response.rows[0];
-        res.send({ message: 'Game deleted successfully', deletedGame });
+        res.status(200).send({ message: 'Game deleted successfully', deletedGame });
 
     } catch (error) {
         next(error);
@@ -208,7 +208,7 @@ app.post('/api/boardgames', async (req, res, next) => {
         const response = await client.query(SQL, [req.body.name, req.body.complexity, req.body.players_min, req.body.players_max, req.body.img]);
         const newBoardGame = response.rows[0];
 
-        res.send(newBoardGame);
+        res.status(200).send(newBoardGame);
 
     } catch (error) {
         next(error);
@@ -234,7 +234,7 @@ app.put('/api/boardgames/:id', async (req, res, next) => {
         }
 
         const updatedBoardGame = response.rows[0];
-        res.send(updatedBoardGame);
+        res.status(200).send(updatedBoardGame);
 
     } catch (error) {
         next(error);
@@ -254,11 +254,11 @@ app.delete('/api/boardgames/:id', async (req, res, next) => {
         const response = await client.query(SQL, [gameId]);
 
         if (response.rows.length === 0) {
-            return res.status(404).json({ error: 'Board game not found' });
+            return res.status(404).send({ error: 'Board game not found' });
         }
 
         const deletedBoardGame = response.rows[0];
-        res.json({ message: 'Board game deleted successfully', deletedBoardGame });
+        res.status(200).send({ message: 'Board game deleted successfully', deletedBoardGame });
 
     } catch (error) {
         next(error);
